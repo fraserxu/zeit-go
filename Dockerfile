@@ -1,6 +1,7 @@
-FROM golang:1.9-alpine as base
+FROM golang:1.9 as base
 WORKDIR /usr/src
 COPY . .
+RUN go get -d -v github.com/gorilla/mux
 RUN CGO_ENABLED=0 go build -ldflags "-s -w" -o main
 
 FROM scratch

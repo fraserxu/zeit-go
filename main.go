@@ -1,13 +1,19 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
+
+	"github.com/gorilla/mux"
 )
 
+func IndexHandler(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Gorilla!!\n"))
+}
+
 func main() {
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello from Go")
-	})
-	http.ListenAndServe(":3000", nil)
+	r := mux.NewRouter()
+	r.HandleFunc("/", IndexHandler)
+
+	log.Fatal(http.ListenAndServe(":8000", r))
 }
